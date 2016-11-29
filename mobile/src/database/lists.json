@@ -1,0 +1,13 @@
+{
+  "lists": [
+    {
+      "uid": 1,
+      "title": "На праздники",
+      "products": [
+        {"product": "molochnaya-produkcia.moloko.prostokvashino"},
+        {"product": "molochnaya-produkcia.yogurt.danone"}
+      ]
+    },
+    {"uid": 2, "title": "Когда голодный"}
+  ]
+}
