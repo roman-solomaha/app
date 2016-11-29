@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
-import {AppRegistry, StyleSheet, ScrollView, SwipeableListView, RecyclerViewBackedScrollView, View, TouchableHighlight, Text, TextInput} from 'react-native';
+import {AppRegistry, StyleSheet, Dimensions, ScrollView, SwipeableListView, RecyclerViewBackedScrollView, View, TouchableHighlight, TouchableOpacity, Text, TextInput} from 'react-native';
 import EditList from './EditList';
+
+const actionWidth = Dimensions.get('window').width / 3;
 
 export default class AllLists extends Component {
 	static title = 'Мои списки';
@@ -11,99 +13,64 @@ export default class AllLists extends Component {
 	}
 
 	componentWillMount() {
-		const lists = this.props.crud.getAll();
-
-		const dataSource = SwipeableListView.getNewDataSource();
-		lists.sort((prev, next) => next.uid - prev.uid);
-
-		this.setState({dataSource: dataSource.cloneWithRowsAndSections(lists)});
+		this.setList();
 	}
 
+	componentWillReceiveProps() {
+		this.setList();
+	}
+
+	setList = () => {
+		const lists = this.props.crud.getAll();
+		const dataSource = SwipeableListView.getNewDataSource();
+		lists.sort((prev, next) => next.uid - prev.uid);
+		this.setState({
+			dataSource: dataSource.cloneWithRowsAndSections([lists]),
+			lists
+		});
+	};
+
 	render = () => {
+		if (!this.state.lists.length) {
+			return this.renderEmpty();
+		}
+
 		return (
-			<SwipeableListView
-				dataSource={this.state.dataSource}
-				maxSwipeDistance={100}
-				renderQuickActions={
-					(rowData, sectionID, rowID) => {
-						return (
-							<View>
-								<TouchableHighlight onPress={() => {
-									console.log({rowData, sectionID, rowID});
-								}}>
-									<Text>Remove</Text>
-								</TouchableHighlight>
-							</View>
-						);
-					}}
-				renderRow={this._renderRow}
-				renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
-				renderSeparator={this._renderSeperator}
-			/>
+			<View style={style.container}>
+				<SwipeableListView
+					dataSource={this.state.dataSource}
+					maxSwipeDistance={actionWidth}
+					enableEmptySections={true}
+					renderQuickActions={this.renderAction}
+					renderRow={this.renderRow}
+					renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
+					renderSeparator={this.renderSeperator}/>
+			</View>
 		);
 	};
 
-
-	// highlightRow: (sectionID: number, rowID: number) => void
-	_renderRow = (rowData, sectionID, rowID, highlightRow) => {
+	renderAction = list => {
 		return (
-			<TouchableHighlight onPress={() => {console.log({rowData, sectionID, rowID, highlightRow})}}>
-				<View style={style.row}>
-					<Text style={style.text}>{rowData.title}</Text>
-					<Text style={style.arrow}>></Text>
-				</View>
-			</TouchableHighlight>
+			<View style={style.action}>
+				<TouchableOpacity style={style.actionButton} onPress={() => this.remove(list.uid)}>
+					<Text style={style.actionText}>Удалить</Text>
+				</TouchableOpacity>
+			</View>
 		);
 	};
 
-	renderRow = (rowData, sectionID, rowID, highlightRow) => {
+	renderRow = list => {
 		return (
 			<TouchableHighlight onPress={() => this.selectList(list)}>
 				<View style={style.row}>
-					<Text style={style.text}>{rowData.title}</Text>
+					<Text style={style.text}>{list.title}</Text>
 					<Text style={style.arrow}>></Text>
 				</View>
 			</TouchableHighlight>
 		);
 	};
 
-
-
-	_renderSeperator = (sectionID, rowID, adjacentRowHighlighted) => {
-		return (
-			<View
-				key={`${sectionID}-${rowID}`}
-				style={{
-					height: adjacentRowHighlighted ? 4 : 1,
-					backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
-				}}
-			/>
-		);
-	};
-
-
-	// render = () => {
-	// 	const lists = this.props.crud.getAll();
-	// 	lists.sort((prev, next) => next.uid - prev.uid);
-	// 	return (
-	// 		<ScrollView>
-	// 			{lists.length ? this.renderLists(lists) : this.renderEmpty()}
-	// 		</ScrollView>
-	// 	);
-	// };
-	//
-	// renderLists = lists => <View>{lists.map((list, key) => this.renderRow(list, key))}</View>;
-
-	// renderRow = (list, key) => {
-	// 	return (
-	// 		<TouchableHighlight key={key} onPress={() => this.selectList(list)}>
-	// 			<View style={style.row}>
-	// 				<Text style={style.text}>{list.title}</Text>
-	// 				<Text style={style.arrow}>></Text>
-	// 			</View>
-	// 		</TouchableHighlight>
-	// 	);
-	// };
+	renderSeperator = (sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={style.separator}/>;
 
 	selectList = list => {
 		const route = {
@@ -112,6 +79,11 @@ export default class AllLists extends Component {
 			passProps: {list, crud: this.props.crud}
 		};
 		return this.props.navigator.push(route);
+	};
+
+	remove = uid => {
+		this.props.crud.remove(uid);
+		this.setList();
 	};
 
 	renderEmpty = () => {
@@ -124,15 +96,22 @@ export default class AllLists extends Component {
 }
 
 const style = StyleSheet.create({
+	container: {
+		flex: 1
+	},
+
 	row: {
 		flexWrap: 'nowrap',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		backgroundColor: '#ffffff',
-		padding: 15,
-		borderBottomWidth: 1,
-		borderBottomColor: '#cccccc'
+		padding: 15
+	},
+
+	separator: {
+		height: 1,
+		backgroundColor: '#cccccc'
 	},
 
 	text: {
@@ -144,6 +123,26 @@ const style = StyleSheet.create({
 		color: '#555555',
 		fontSize: 20,
 		fontWeight: 'normal'
+	},
+
+	action: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		alignItems: 'stretch'
+	},
+
+	actionButton: {
+		backgroundColor: '#ff0000',
+		width: actionWidth,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+
+	actionText: {
+		color: '#ffffff',
+		fontSize: 20,
+		fontWeight: 'bold'
 	},
 
 	containerEmpty: {

@@ -9,7 +9,7 @@ export default class EditList extends Component {
 					<Text>{`UID = ${this.props.list.uid}`}</Text>
 					<Text>{`Название = ${this.props.list.title}`}</Text>
 					<Text>{`Продукты = {`}</Text>
-					{this.props.list.products.map((product, key) => <View key={key}><Text>{key + 1}: {product.path}</Text></View>)}
+					{this.props.list.products && this.props.list.products.map((product, key) => <View key={key}><Text>{key + 1}: {product.path}</Text></View>)}
 					<Text>}</Text>
 					<TouchableHighlight onPress={() => this.remove()}>
 						<View style={style.removeButton}>
