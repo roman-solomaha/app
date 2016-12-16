@@ -4,7 +4,11 @@
       "uid": 1,
       "title": "На праздники",
       "products": [
-        {"product": "molochnaya-produkcia.moloko.prostokvashino"},
+        {
+          "image": "",
+          "path": "molochnaya-produkcia.moloko.prostokvashino",
+          "info": []
+        },
         {"product": "molochnaya-produkcia.yogurt.danone"}
       ]
     },

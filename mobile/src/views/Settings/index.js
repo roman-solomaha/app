@@ -22,7 +22,8 @@ const style = StyleSheet.create({
 	},
 
 	header: {
-		fontSize: 20
+		fontSize: 20,
+		marginBottom: 20
 	},
 
 	button: {
@@ -31,7 +32,8 @@ const style = StyleSheet.create({
 		flexWrap: 'nowrap',
 		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		paddingHorizontal: 50
 	},
 
 	buttonText: {
