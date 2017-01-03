@@ -1,36 +1,15 @@
-import React, {Component, PropTypes} from 'react';
-import {AppRegistry, StyleSheet, TabBarIOS, View} from 'react-native';
-import routes from './routes';
+import React, {Component} from 'react';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
 
-export default class App extends Component {
-	constructor() {
-		super(...arguments);
-		this.state = {selected: 'lists', loading: false};
-	}
+import * as reducers from './reducers';
+import TabBarNavigation from './TabBarNavigation';
 
-	render = () => {
-		return (
-			<TabBarIOS unselectedTintColor="#929292" tintColor="#0099ff" barTintColor="#f9f9f9">
-				{routes.map((route, key) => this.renderRoute(route, key))}
-			</TabBarIOS>
-		);
-	};
+const store = createStore(combineReducers(reducers), applyMiddleware(thunk));
 
-	renderRoute = (route, key) => {
-		const Route = route.component;
-		const itemProps = {
-			...route,
-			key: key,
-			selected: this.state.selected === route.name,
-			onPress: () => this.setState({selected: route.name})
-		};
-
-		return (
-			<TabBarIOS.Item {...itemProps}>
-				<Route/>
-			</TabBarIOS.Item>
-		);
-	};
+class App extends Component {
+	render = () => <Provider store={store}><TabBarNavigation/></Provider>;
 }
 
-AppRegistry.registerComponent('App', () => App);
+export default App;

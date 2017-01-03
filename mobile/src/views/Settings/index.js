@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, AsyncStorage, View, TouchableHighlight, Text} from 'react-native';
+import {StyleSheet, AsyncStorage, View, TouchableHighlight, Text} from 'react-native';
 
 export default class Settings extends Component {
 	render = () => {
@@ -41,5 +41,3 @@ const style = StyleSheet.create({
 		fontSize: 20
 	}
 });
-
-AppRegistry.registerComponent('Settings', () => Settings);

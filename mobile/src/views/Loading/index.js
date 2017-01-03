@@ -1,15 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, View, ActivityIndicator} from 'react-native';
-
-export default class Loading extends Component {
-	render = () => {
-		return (
-			<View style={style.container}>
-				<ActivityIndicator size="large" color="#000000"/>
-			</View>
-		);
-	};
-}
+import {StyleSheet, View, ActivityIndicator} from 'react-native';
 
 const style = StyleSheet.create({
 	container: {
@@ -20,4 +10,14 @@ const style = StyleSheet.create({
 	}
 });
 
-AppRegistry.registerComponent('Loading', () => Loading);
+class Loading extends Component {
+	render = () => {
+		return (
+			<View style={style.container}>
+				<ActivityIndicator size="large" color="#000000"/>
+			</View>
+		);
+	};
+}
+
+export default Loading;

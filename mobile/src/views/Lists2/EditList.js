@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, ScrollView, View, TouchableHighlight, Text, TextInput} from 'react-native';
+import {StyleSheet, ScrollView, View, TouchableHighlight, Text, TextInput} from 'react-native';
 
 export default class EditList extends Component {
 	render = () => {
@@ -46,5 +46,3 @@ const style = StyleSheet.create({
 		fontSize: 20
 	}
 });
-
-AppRegistry.registerComponent('EditList', () => EditList);

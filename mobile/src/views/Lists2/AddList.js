@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, ScrollView, View, TouchableHighlight, Text, TextInput, Image} from 'react-native';
+import {StyleSheet, ScrollView, View, TouchableHighlight, Text, TextInput, Image} from 'react-native';
 import Products from './Products';
 import {PRODUCTS} from '../../database/products.json';
 
@@ -164,5 +164,3 @@ const style = StyleSheet.create({
 		fontSize: 16
 	}
 });
-
-AppRegistry.registerComponent('AddList', () => AddList);

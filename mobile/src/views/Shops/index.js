@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, MapView} from 'react-native';
-
-export default class Shops extends Component {
-	render = () => {
-		return <MapView style={style.map}
-		                followUserLocation={true}
-		                showsUserLocation={true}/>;
-	};
-}
+import {StyleSheet, MapView} from 'react-native';
 
 const style = StyleSheet.create({
 	map: {
@@ -15,4 +7,12 @@ const style = StyleSheet.create({
 	}
 });
 
-AppRegistry.registerComponent('Shops', () => Shops);
+class Shops extends Component {
+	render = () => {
+		return <MapView style={style.map}
+		                followUserLocation={true}
+		                showsUserLocation={true}/>;
+	};
+}
+
+export default Shops;

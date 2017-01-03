@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, Dimensions, StyleSheet, ScrollView, View, TouchableOpacity, TouchableHighlight, Text, Image} from 'react-native';
+import {Dimensions, StyleSheet, ScrollView, View, TouchableOpacity, TouchableHighlight, Text, Image} from 'react-native';
 
 export default class Products extends Component {
 	render = () => {
@@ -147,5 +147,3 @@ const style = StyleSheet.create({
 		fontSize: 20
 	}
 });
-
-AppRegistry.registerComponent('Products', () => Products);

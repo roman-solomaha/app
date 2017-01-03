@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {AppRegistry, StyleSheet, Dimensions, ScrollView, SwipeableListView, RecyclerViewBackedScrollView, View, TouchableHighlight, TouchableOpacity, Text, TextInput} from 'react-native';
+import {StyleSheet, Dimensions, ScrollView, SwipeableListView, RecyclerViewBackedScrollView, View, TouchableHighlight, TouchableOpacity, Text, TextInput} from 'react-native';
 import EditList from './EditList';
 
 const actionWidth = Dimensions.get('window').width / 3;
@@ -157,5 +157,3 @@ const style = StyleSheet.create({
 		fontSize: 30
 	}
 });
-
-AppRegistry.registerComponent('AllLists', () => AllLists);
