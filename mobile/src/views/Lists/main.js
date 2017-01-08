@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as listsActions from '../../actions/lists';
 import * as loadingActions from '../../actions/loading';
 import Loading from '../Loading';
-import Form from './Form';
+import Form from './form';
 import {
 	StyleSheet,
 	Dimensions,
@@ -91,7 +91,10 @@ class Main extends Component {
 	constructor() {
 		super(...arguments);
 		this.state = {lists: []};
-		this.initLists();
+	}
+
+	componentWillMount() {
+		this.initLists().done();
 	}
 
 	componentWillReceiveProps(props) {
@@ -103,6 +106,9 @@ class Main extends Component {
 		try {
 			let lists = await AsyncStorage.getItem('lists');
 			lists = JSON.parse(lists) || [];
+			if (lists.length < 3) {
+				await AsyncStorage.setItem('lists', JSON.stringify([...lists, {uid: Date.now(), title: `${Date.now()} ${Date.now()} ${Date.now()}`}]));
+			}
 			this.props.listsActions.init(lists);
 			this.props.loadingActions.loading(false);
 		}

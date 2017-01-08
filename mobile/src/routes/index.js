@@ -6,19 +6,22 @@ export default [
 	{
 		title: 'Списки',
 		name: 'lists',
-		icon: require('../images/lists.png'),
+		iconStatic: require('../images/listsStatic.png'),
+		iconActive: require('../images/listsActive.png'),
 		component: Lists
 	},
 	{
 		title: 'Магазины',
 		name: 'shops',
-		icon: require('../images/shops.png'),
+		iconStatic: require('../images/shopsStatic.png'),
+		iconActive: require('../images/shopsActive.png'),
 		component: Shops
 	},
 	{
 		title: 'Настройки',
 		name: 'settings',
-		icon: require('../images/settings.png'),
+		iconStatic: require('../images/settingsStatic.png'),
+		iconActive: require('../images/settingsActive.png'),
 		component: Settings
 	}
 ];

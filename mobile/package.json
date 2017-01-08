@@ -3,18 +3,25 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "postinstall": "node_modules/.bin/rn-nodeify --install http,https,url,zlib,_stream_transform,assert --hack",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
   "dependencies": {
+    "assert": "^1.4.1",
+    "browserify-zlib": "^0.1.4",
+    "https-browserify": "0.0.1",
     "lodash": "^4.17.4",
-    "react": "^15.3.2",
+    "react": "^15.4.1",
     "react-mixin": "^2.0.2",
-    "react-native": "^0.35.0",
+    "react-native": "^0.39.2",
+    "react-native-drawer": "^2.3.0",
+    "react-native-http": "github:tradle/react-native-http#834492d",
     "react-redux": "^5.0.1",
     "react-tween-state": "^0.1.5",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "url": "^0.10.3",
     "whatwg-fetch": "^1.1.1"
   },
   "jest": {
@@ -26,5 +33,17 @@
     "jest": "^16.0.1",
     "jest-react-native": "^16.0.0",
     "react-test-renderer": "^15.3.2"
+  },
+  "react-native": {
+    "zlib": "browserify-zlib",
+    "http": "react-native-http",
+    "https": "https-browserify",
+    "_stream_transform": "readable-stream/transform"
+  },
+  "browser": {
+    "zlib": "browserify-zlib",
+    "http": "react-native-http",
+    "https": "https-browserify",
+    "_stream_transform": "readable-stream/transform"
   }
 }
